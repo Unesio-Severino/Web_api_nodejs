@@ -12,13 +12,24 @@ class HeroRepository {
         if(!itemId) return all
 
         return all.find(({id}) => itemId === id)
-
     }
+    async create(data) {
+        const currentFile = await this._currentFileContent()
+        currentFile.push(data)
+
+        await writeFile(this.file,  JSON.stringify(currentfile))
+        
+        return data.id
+    }
+
+
 }
 
 module.exports = HeroRepository
 
 const heroRepository =  new HeroRepository({
     file: './../../database/data.json'
-})
-heroRepository.find().then(console.log(error => console.log('error', error)))
+}) 
+
+
+//heroRepository.find().then(console.log(error => console.log('error', error)))
